@@ -14,9 +14,9 @@ cd Subtitle-Mass-Renamer
 python main.py -s <suffix of subtitles> -m <suffix of movies> <location>
 ```
 
-<suffix of subtitles> - included suffix eg.: txt, .txt and also filename or filepath -> autodetection suffix (for simpler use - drag and drop)
-<suffix of movies> - see to <suffix of subtitles>
-<location> - location of directory contains subtitles and movies
+- <suffix of subtitles> - included suffix eg.: txt, .txt and also filename or filepath -> autodetection suffix (for simpler use - drag and drop)
+- <suffix of movies> - see to <suffix of subtitles>
+- <location> - location of directory contains subtitles and movies
 
 Examples:
 ```
