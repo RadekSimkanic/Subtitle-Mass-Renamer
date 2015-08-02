@@ -89,7 +89,7 @@ class Renamer:
                 )
             )
 
-        count = len(first_list) if len(first_list) >= len(second_list) else len(second_list)
+        count = len(first_list) if len(first_list) <= len(second_list) else len(second_list)
         first_list.sort()
         second_list.sort()
 
