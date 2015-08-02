@@ -5,11 +5,14 @@ from messages import *
 
 class Renamer:
     def __init__(self, path):
-        self.path = path
+        self.path = path if path != "" else "."
         self.first_suffix = "."
         self.second_suffix = "."
-        self.files = []#os.listdir(path)
+        self.files = []
+        self.test_mode = False
 
+    def testMode(self):
+        self.test_mode = True
 
     def setFirstSuffix(self, suffix):
         self.first_suffix = suffix
@@ -69,6 +72,9 @@ class Renamer:
 
         message(INFORMATION, "Filtering files")
 
+        if self.test_mode:
+            message(DONE, "TEST MODE ENABLED")
+
         for f in self.files:
             if str(f).endswith(self.first_suffix):
                 first_list.append(str(f))
@@ -99,7 +105,10 @@ class Renamer:
 
             self._rename(first_file, second_file)
 
-        message(DONE, "All possible subtitle files are renamed.")
+        if self.test_mode:
+            message(DONE, "Test mode - DONE.")
+        else:
+            message(DONE, "All possible subtitle files are renamed.")
 
 
 
@@ -110,10 +119,11 @@ class Renamer:
 
         second_full_name = "%s%s"%(first_name, self.second_suffix)
 
-        os.renames(
-            str(self.path) + str(second_file),
-            str(self.path) + str(second_full_name)
-        )
+        if not self.test_mode:
+            os.renames(
+                str(self.path) + str(second_file),
+                str(self.path) + str(second_full_name)
+            )
 
         message(INFORMATION, "Rename done:\n\told name: '%s' \n\tvia file: '%s' \n\tnew name: '%s'"%(second_file, first_file, second_full_name))
         return
