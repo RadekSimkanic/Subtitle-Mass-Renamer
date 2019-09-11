@@ -1,5 +1,4 @@
-#!/usr/bin/python
-#UTF-8
+# UTF-8
 __author__ = 'gulliver - Radek Simkanic - SIM0094'
 
 import sys
@@ -7,20 +6,20 @@ import messages as msg
 
 
 class Argument:
-    def __init__(self, short, long, description, contains_value = True, required = False):
+    def __init__(self, short, long, description, contains_value=True, required=False):
         if isinstance(short, str) == False or isinstance(long, str) == False or isinstance(description, str) == False:
             msg.message(
                 msg.SYSTEM_ERROR,
                 "Parameters short, long and description must be string",
                 TypeError
             )
-        if isinstance(contains_value, bool) == False:
+        if isinstance(contains_value, bool) is False:
             msg.message(
                 msg.SYSTEM_ERROR,
                 "Parameter contains_value must be bool",
                 TypeError
             )
-        if isinstance(required, bool) == False:
+        if isinstance(required, bool) is False:
             msg.message(
                 msg.SYSTEM_ERROR,
                 "Parameter required must be bool",
@@ -64,7 +63,6 @@ class Argument:
     def getValue(self):
         return self.value
 
-
     def setDependencies(self, list_of_arguments):
         if not isinstance(list_of_arguments, list):
             msg.message(
@@ -85,20 +83,19 @@ class Argument:
         self.incompatible = list_of_arguments
         return self
 
-
     def _checkDependencies(self):
         for d in self.dependencies:
-            if isinstance(d, list): # sublist is OR for each item
+            if isinstance(d, list):  # sublist is OR for each item
                 found = False
                 for d2 in d:
                     if d2 in self.all_arguments:
                         found = True
                         break
-                if not found:
-                    self.is_all_dependencies = False
-                    self.what_need = " OR ".join(map(str,d))
-                    return False
-                continue
+                    if not found:
+                        self.is_all_dependencies = False
+                        self.what_need = " OR ".join(map(str, d))
+                        return False
+                    continue
             if d not in self.all_arguments:
                 self.is_all_dependencies = False
                 self.what_need = d
@@ -135,7 +132,7 @@ class Argument:
         r = self._check(value)
         if r is True or (r is tuple and r[0] is True):
             self.value = value
-            return True
+        return True
         return r
 
     def _setSelected(self):
@@ -148,7 +145,8 @@ class Argument:
         return str(self)
 
     def __str__(self):
-        return "argument (short: %s%s, long: %s%s)"%(Arguments.short_prefix, self.short, Arguments.long_prefix, self.long)
+        return "argument (short: %s%s, long: %s%s)" % (Arguments.short_prefix, self.short, Arguments.long_prefix, self.long)
+
 
 # And example how to create own argument checker
 class ExampleArgument:
@@ -199,7 +197,7 @@ class Arguments:
         self.long_prefix = prefix
         return self
 
-    def allowedEmptyArguments(self, allowed = True):
+    def allowedEmptyArguments(self, allowed=True):
         self.allowed_empty_arguments = allowed
 
         if not allowed and self.is_empty:
@@ -212,18 +210,20 @@ class Arguments:
     def isEmpty(self):
         return self.is_empty_arguments
 
-    def addArgument(self, argument, is_shaddow_argument = False):
+    def addArgument(self, argument, is_shaddow_argument=False):
         if self.ready:
             msg.message(
                 msg.SYSTEM_ERROR,
                 "After calling method check is not possible call method addArgument",
-                StandardError
+                Exception
             )
         if isinstance(argument, Argument):
             if len(argument._getShort()):
-                self.arguments_for_checking[str(self.short_prefix) + argument._getShort()] = argument
+                self.arguments_for_checking[str(
+                    self.short_prefix) + argument._getShort()] = argument
             if len(argument._getLong()):
-                self.arguments_for_checking[str(self.long_prefix) + argument._getLong()] = argument
+                self.arguments_for_checking[str(
+                    self.long_prefix) + argument._getLong()] = argument
 
             argument._setAllArguments(self.used_arguments)
             self.arguments.append(argument)
@@ -235,7 +235,7 @@ class Arguments:
         else:
             msg.message(
                 msg.SYSTEM_ERROR,
-                "Type must be instance of Argument, not %s"%type(argument),
+                "Type must be instance of Argument, not %s" % type(argument),
                 TypeError
             )
 
@@ -244,13 +244,14 @@ class Arguments:
             msg.message(
                 msg.SYSTEM_ERROR,
                 "After calling method check is not possible call method check",
-                StandardError
+                Exception
             )
         self.ready = True
 
         if self.is_empty:
             if not self.allowed_empty_arguments:
-                msg.message(msg.ERROR, "You must set any arguments (for help -h)")
+                msg.message(
+                    msg.ERROR, "You must set any arguments (for help -h)")
             return self
 
         again_continue = False
@@ -263,11 +264,11 @@ class Arguments:
 
             if set_value is not None:
                 r = set_value._setValue(a)
-                r_e = r # error
-                r_m = "" # message
+                r_e = r  # error
+                r_m = ""  # message
                 if isinstance(r, tuple):
                     r_e = bool(r[0])
-                    r_m = "\nMessage: %s"%str(r[1])
+                    r_m = "\nMessage: %s" % str(r[1])
 
                 if r_e is False:
                     p = []
@@ -277,12 +278,13 @@ class Arguments:
                         p.append(self.long_prefix + set_value._getLong())
                     msg.message(
                         msg.ERROR,
-                        "%s can't accept this value: %s%s"%(set_value, a, r_m)
+                        "%s can't accept this value: %s%s" % (
+                            set_value, a, r_m)
                     )
                 set_value = None
                 continue
 
-            if self.arguments_for_checking.has_key(a):
+            if a in self.arguments_for_checking:
                 a_obj = self.arguments_for_checking[a]
                 if a_obj in self.used_arguments:
                     if a_obj._containsValue():
@@ -307,7 +309,8 @@ class Arguments:
             if not a._checkDependencies():
                 msg.message(
                     msg.ERROR,
-                    "Is not set all dependencies: %s\n\t is needed: %s"%(a, a._getWhatNeedArgument())
+                    "Is not set all dependencies: %s\n\t is needed: %s" % (
+                        a, a._getWhatNeedArgument())
                 )
 
     def __checkIncompatible(self):
@@ -315,32 +318,35 @@ class Arguments:
             if not a._checkIncompatible():
                 msg.message(
                     msg.ERROR,
-                    "Incompatible arguments between: \n\t%s \n\t%s"%(str(a), str(a._getWhatIsIncompatible()) )
+                    "Incompatible arguments between: \n\t%s \n\t%s" % (
+                        str(a), str(a._getWhatIsIncompatible()))
                 )
 
     def __help(self):
         template = "\t%s%s%s\t%s"
 
-        print "HELP"
+        print("HELP")
 
-        print self.head_information
+        print(self.head_information)
 
         if len(self.arguments):
-            print "\nShort commands:"
+            print("\nShort commands:")
             for a in self.arguments:
                 if len(a._getShort()):
                     v = ""
                     if a._containsValue():
                         v = " [value]"
 
-                    print template % (self.short_prefix, a._getShort(), v, a._getDescription())
+                    print(template % (self.short_prefix, a._getShort(), v,
+                                      a._getDescription()))
 
-            print "\nLong commands:"
+            print("\nLong commands:")
             for a in self.arguments:
                 if len(a._getLong()):
                     v = ""
                     if a._containsValue():
                         v = " [value]"
 
-                    print template % (self.long_prefix, a._getLong(), v, a._getDescription())
+                    print(template % (self.long_prefix, a._getLong(), v,
+                                      a._getDescription()))
         sys.exit()
