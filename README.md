@@ -12,7 +12,7 @@ Download actual source code (unpacking):
 git clone git@github.com:RadekSimkanic/Subtitle-Mass-Renamer.git
 cd Subtitle-Mass-Renamer
 ```
-Run usage:
+Usage:
 ```
 usage: main.py [-h] -s SUBTITLE -m MOVIE [-d DIRECTORY] [-t]
 
