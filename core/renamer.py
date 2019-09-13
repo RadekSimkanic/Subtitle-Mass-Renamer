@@ -1,5 +1,5 @@
 import os
-from messages import message, ERROR, WARNING, INFORMATION, DONE
+from .messages import message, ERROR, WARNING, INFORMATION, DONE
 
 
 class Renamer:
@@ -22,7 +22,9 @@ class Renamer:
     def _check(self):
         if not os.path.isdir(self.path):
             message(
-                ERROR, "Directory '%s' is not exists or is not directory" % self.path)
+                ERROR,
+                "Directory '%s' does not exists or is not directory"
+                % self.path)
 
         self.files = os.listdir(self.path)
 
@@ -122,10 +124,12 @@ class Renamer:
 
         if not self.test_mode:
             os.renames(
-                str(self.path) + str(second_file),
-                str(self.path) + str(second_full_name)
+                os.path.join(self.path, second_file),
+                os.path.join(self.path, second_full_name)
             )
 
-        message(INFORMATION, "Rename done:\n\told name: '%s' \n\tvia file: '%s' \n\tnew name: '%s'" % (
-            second_file, first_file, second_full_name))
+        message(INFORMATION,
+                """Rename done:\n\told name: '%s' \n\tvia file: '%s'\n\tnew name: '%s'""" % (
+                    second_file.encode('utf-8'), first_file.encode('utf-8'),
+                    second_full_name.encode('utf-8')))
         return

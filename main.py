@@ -1,59 +1,34 @@
-#!/usr/bin/python
-# UTF-8
 __author__ = 'gulliver - Radek Simkanic'
 
-from core.application_arguments import Argument, Arguments
+import argparse
 from core.renamer import Renamer
 
 
+def parseArguments():
+    parser = argparse.ArgumentParser(
+        description="Rename multiple subtitles automatically")
+
+    parser.add_argument('-s', '--subtitle', required=True,
+                        help="Subtitle file extension")
+    parser.add_argument('-m', '--movie', required=True,
+                        help="Video file extension")
+    parser.add_argument('-d', '--directory', help="Directory containing files",
+                        default=".")
+    parser.add_argument('-t', '--test', action='store_true',
+                        help="Run in test mode")
+
+    return parser.parse_args()
+
+
 def main():
-    # Applications arguments
-    arg_movie = Argument(
-        "m", "movie", "First file suffix (suffix of movies)", True, True)
-    arg_subtitle = Argument(
-        "s", "subtitle", "Second file suffix (suffix of subtitles)", True, True)
-    arg_directory = Argument("d", "directory", "Source directory", True, False)
-    arg_simulate = Argument(
-        "t", "test", "Test - simulate renaming", False, False)
+    args = parseArguments()
 
-    # Arguments dependencies
-    arg_movie.setDependencies([
-        arg_subtitle
-    ])
-
-    arg_subtitle.setDependencies([
-        arg_movie
-    ])
-
-    arg_directory.setDependencies([
-        arg_subtitle, arg_movie
-    ])
-
-    arg_simulate.setDependencies([
-        arg_subtitle, arg_movie
-    ])
-
-    arg = Arguments()
-    arg.setHeadInformation("Last params without commands is source directory with files of movies and subtitles.")\
-        .addArgument(
-        arg_movie
-    )\
-        .addArgument(
-        arg_subtitle
-    )\
-        .addArgument(
-        arg_directory, True
-    )\
-        .addArgument(
-        arg_simulate
-    )\
-        .check()
-
-    r = Renamer(arg_directory.getValue())
-    r.setFirstSuffix(arg_movie.getValue())
-    r.setSecondSuffix(arg_subtitle.getValue())
-    if arg_simulate.isSelected():
+    r = Renamer(args.directory)
+    r.setFirstSuffix(args.movie)
+    r.setSecondSuffix(args.subtitle)
+    if args.test:
         r.testMode()
+
     r.do()
 
 

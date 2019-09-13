@@ -1,4 +1,3 @@
-# UTF-8
 import sys
 
 INFORMATION = 0
