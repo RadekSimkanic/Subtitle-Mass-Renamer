@@ -14,7 +14,7 @@ cd Subtitle-Mass-Renamer
 ```
 Usage:
 ```
-usage: main.py [-h] -s SUBTITLE -m MOVIE [-d DIRECTORY] [-t]
+usage: main.py [-h] -s SUBTITLE -m MOVIE [-d DIRECTORY] [-t] [-l LANGUAGE]
 
 Rename multiple subtitles automatically
 
