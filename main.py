@@ -12,6 +12,7 @@ def parseArguments():
             'Examples:\n'
             '\tpython main.py -s txt -m avi .\n'
             '\tpython main.py -s srt -m mp4 ../../Video/\n'
+            '\tpython main.py -s srt -m mp4 ../../Video/ -l eng\n'
             '\tpython main.py -s my_serial_series_01_episode_01.txt -m my_serial_SE01E01.avi ../../Video/\n'
             '\tpython main.py -s /home/user/Video/my_serial_series_01_episode_01.txt -m /home/user/Video/my_serial_SE01E01.avi /home/user/Video/\n'
             '\tpython main.py -s srt -m mp4 ../../Video/ -t'
