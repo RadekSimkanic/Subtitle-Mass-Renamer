@@ -3,21 +3,16 @@ from .messages import message, ERROR, WARNING, INFORMATION, DONE
 
 
 class Renamer:
-    def __init__(self, path):
-        self.path = path if path != "" else "."
-        self.first_suffix = "."
-        self.second_suffix = "."
+    def __init__(self, path, sub_ext, video_ext, language=""):
+        self.path = path if path else "."
+        self.first_suffix = sub_ext if sub_ext else "."
+        self.second_suffix = video_ext if video_ext else "."
         self.files = []
         self.test_mode = False
+        self.language = language
 
     def testMode(self):
         self.test_mode = True
-
-    def setFirstSuffix(self, suffix):
-        self.first_suffix = suffix
-
-    def setSecondSuffix(self, suffix):
-        self.second_suffix = suffix
 
     def _check(self):
         if not os.path.isdir(self.path):
@@ -120,7 +115,11 @@ class Renamer:
         first_name = first_name[0:-1]
         first_name = ".".join(first_name)
 
-        second_full_name = "%s%s" % (first_name, self.second_suffix)
+        if self.language and self.language[0] != ".":
+            self.language = "." + self.language
+
+        second_full_name = "%s%s%s" % (first_name, self.language,
+                                       self.second_suffix)
 
         if not self.test_mode:
             os.renames(

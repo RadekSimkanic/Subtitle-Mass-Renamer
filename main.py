@@ -28,15 +28,17 @@ def parseArguments():
     parser.add_argument('-t', '--test', action='store_true',
                         help="Run in test mode")
 
+    parser.add_argument('-l', '--language', help="Language code to be added to\
+                         the subtitles, e.g. en or eng", default="")
+
     return parser.parse_args()
 
 
 def main():
     args = parseArguments()
 
-    r = Renamer(args.directory)
-    r.setFirstSuffix(args.movie)
-    r.setSecondSuffix(args.subtitle)
+    r = Renamer(args.directory, args.subtitle, args.movie, args.language)
+
     if args.test:
         r.testMode()
 
