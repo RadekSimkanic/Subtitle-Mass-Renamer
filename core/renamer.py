@@ -5,8 +5,8 @@ from .messages import message, ERROR, WARNING, INFORMATION, DONE
 class Renamer:
     def __init__(self, path, sub_ext, video_ext, language=""):
         self.path = path if path else "."
-        self.first_suffix = sub_ext if sub_ext else "."
-        self.second_suffix = video_ext if video_ext else "."
+        self.first_suffix = video_ext if video_ext else "."
+        self.second_suffix = sub_ext if sub_ext else "."
         self.files = []
         self.test_mode = False
         self.language = language
