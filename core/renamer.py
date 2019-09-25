@@ -111,7 +111,7 @@ class Renamer:
             message(DONE, "All possible subtitle files are renamed.")
 
     def _rename(self, first_file, second_file):
-        first_name = first_file.split(".")
+        first_name = second_file.split(".")
         first_name = first_name[0:-1]
         first_name = ".".join(first_name)
 
@@ -119,16 +119,16 @@ class Renamer:
             self.language = "." + self.language
 
         second_full_name = "%s%s%s" % (first_name, self.language,
-                                       self.second_suffix)
+                                       self.first_suffix)
 
         if not self.test_mode:
             os.renames(
-                os.path.join(self.path, second_file),
+                os.path.join(self.path, first_file),
                 os.path.join(self.path, second_full_name)
             )
 
         message(INFORMATION,
                 """Rename done:\n\told name: '%s' \n\tvia file: '%s'\n\tnew name: '%s'""" % (
-                    second_file.encode('utf-8'), first_file.encode('utf-8'),
+                    first_file.encode('utf-8'), second_file.encode('utf-8'),
                     second_full_name.encode('utf-8')))
         return
