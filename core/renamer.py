@@ -5,8 +5,8 @@ from .messages import message, ERROR, WARNING, INFORMATION, DONE
 class Renamer:
     def __init__(self, path, sub_ext, video_ext, language=""):
         self.path = path if path else "."
-        self.first_suffix = sub_ext if sub_ext else "."
-        self.second_suffix = video_ext if video_ext else "."
+        self.first_suffix = video_ext if video_ext else "."
+        self.second_suffix = sub_ext if sub_ext else "."
         self.files = []
         self.test_mode = False
         self.language = language
@@ -111,7 +111,7 @@ class Renamer:
             message(DONE, "All possible subtitle files are renamed.")
 
     def _rename(self, first_file, second_file):
-        first_name = second_file.split(".")
+        first_name = first_file.split(".")
         first_name = first_name[0:-1]
         first_name = ".".join(first_name)
 
@@ -119,16 +119,16 @@ class Renamer:
             self.language = "." + self.language
 
         second_full_name = "%s%s%s" % (first_name, self.language,
-                                       self.first_suffix)
+                                       self.second_suffix)
 
         if not self.test_mode:
             os.renames(
-                os.path.join(self.path, first_file),
+                os.path.join(self.path, second_file),
                 os.path.join(self.path, second_full_name)
             )
 
         message(INFORMATION,
                 """Rename done:\n\told name: '%s' \n\tvia file: '%s'\n\tnew name: '%s'""" % (
-                    first_file.encode('utf-8'), second_file.encode('utf-8'),
+                    second_file.encode('utf-8'), first_file.encode('utf-8'),
                     second_full_name.encode('utf-8')))
         return
