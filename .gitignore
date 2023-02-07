@@ -1,3 +1,7 @@
 *.pyc
 .idea
 .vscode
+testFolder
+build
+dist
+.vs
