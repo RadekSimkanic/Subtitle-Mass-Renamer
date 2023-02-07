@@ -14,28 +14,29 @@ cd Subtitle-Mass-Renamer
 ```
 Usage:
 ```
-usage: main.py [-h] -s SUBTITLE -m MOVIE [-d DIRECTORY] [-t]
+usage: subtitle-renamer.py [-h] [-s SUBTITLE] [-m MOVIE] [-d DIRECTORY] [-t] [-l LANGUAGE]
 
 Rename multiple subtitles automatically
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -s SUBTITLE, --subtitle SUBTITLE
-                        Subtitle file extension, i.e. srt, txt, ass, etc.
+                        Subtitle file extension, i.e. srt, txt, ass, etc. Default: srt
   -m MOVIE, --movie MOVIE
-                        Video file extension, i.e. avi, mkv, mp4, etc.
+                        Video file extension, i.e. avi, mkv, mp4, etc. Default: mp4
   -d DIRECTORY, --directory DIRECTORY
-                        Directory containing files
+                        Directory containing files. Defaults to current directory.
   -t, --test            Run in test mode
   -l LANGUAGE, --language LANGUAGE
-                        Language code to be added to the subtitles, e.g. en or
-                        eng
+                        Language code to be added to the subtitles, e.g. en or eng. Default: en
 
 Examples:
-        python main.py -s txt -m avi .
-        python main.py -s srt -m mp4 ../../Video/
-        python main.py -s srt -m mp4 ../../Video/ -l eng
-        python main.py -s my_serial_series_01_episode_01.txt -m my_serial_SE01E01.avi ../../Video/
-        python main.py -s /home/user/Video/my_serial_series_01_episode_01.txt -m /home/user/Video/my_serial_SE01E01.avi /home/user/Video/
-        python main.py -s srt -m mp4 ../../Video/ -t
+        python subtitle-renamer.py
+        python subtitle-renamer.py -t
+        python subtitle-renamer.py -m mkv
+        python subtitle-renamer.py -s ass
+        python subtitle-renamer.py -s txt -m avi
+        python subtitle-renamer.py -d ../../Video/
+        python subtitle-renamer.py -d ../../Video/ -l eng
+        python subtitle-renamer.py -s srt -m mp4 -d ../../Video/ -t
 ```

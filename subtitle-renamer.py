@@ -10,12 +10,14 @@ def parseArguments():
         description="Rename multiple subtitles automatically",
         epilog=(
             "Examples:\n"
-            "\tpython main.py -s txt -m avi .\n"
-            "\tpython main.py -s srt -m mp4 ../../Video/\n"
-            "\tpython main.py -s srt -m mp4 ../../Video/ -l eng\n"
-            "\tpython main.py -s my_serial_series_01_episode_01.txt -m my_serial_SE01E01.avi ../../Video/\n"
-            "\tpython main.py -s /home/user/Video/my_serial_series_01_episode_01.txt -m /home/user/Video/my_serial_SE01E01.avi /home/user/Video/\n"
-            "\tpython main.py -s srt -m mp4 ../../Video/ -t"
+            "\tpython subtitle-renamer.py\n"
+            "\tpython subtitle-renamer.py -t\n"
+            "\tpython subtitle-renamer.py -m mkv\n"
+            "\tpython subtitle-renamer.py -s ass\n"
+            "\tpython subtitle-renamer.py -s txt -m avi\n"
+            "\tpython subtitle-renamer.py -d ../../Video/\n"
+            "\tpython subtitle-renamer.py -d ../../Video/ -l eng\n"
+            "\tpython subtitle-renamer.py -s srt -m mp4 -d ../../Video/ -t"
         ),
         formatter_class=RawDescriptionHelpFormatter,
     )
@@ -23,17 +25,20 @@ def parseArguments():
     parser.add_argument(
         "-s",
         "--subtitle",
-        help="Subtitle file extension, i.e. srt, txt, ass, etc.",
+        help="Subtitle file extension, i.e. srt, txt, ass, etc. Default: srt",
         default="srt",
     )
     parser.add_argument(
         "-m",
         "--movie",
-        help="Video file extension, i.e. avi, mkv, mp4, etc.",
+        help="Video file extension, i.e. avi, mkv, mp4, etc. Default: mp4",
         default="mp4",
     )
     parser.add_argument(
-        "-d", "--directory", help="Directory containing files", default="."
+        "-d",
+        "--directory",
+        help="Directory containing files. Defaults to current directory.",
+        default=".",
     )
     parser.add_argument("-t", "--test", action="store_true", help="Run in test mode")
 
@@ -41,7 +46,7 @@ def parseArguments():
         "-l",
         "--language",
         help="Language code to be added to\
-                         the subtitles, e.g. en or eng",
+                         the subtitles, e.g. en or eng. Default: en",
         default="en",
     )
 
