@@ -16,6 +16,7 @@ Usage:
 ```
 usage: subtitle-renamer.py [-h] [-s SUBTITLE] [-m MOVIE] [-d DIRECTORY] [-t] [-l LANGUAGE]
 
+
 Rename multiple subtitles automatically
 
 options:
